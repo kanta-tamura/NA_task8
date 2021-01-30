@@ -1,0 +1,8 @@
+# デフォルトの無視ファイル
+/shelf/
+/workspace.xml
+# データソースのローカルストレージがファイルを無視しました
+/../../../../../:\Programing\CLion\NA_task8\.idea/dataSources/
+/dataSources.local.xml
+# エディターベースの HTTP クライアントリクエスト
+/httpRequests/
