@@ -1,30 +1,26 @@
 #include <iostream>
 
-#define ROW 5       // 行
-#define COLUMN 5    // 列
+#define ROW 4       // 行
+#define COLUMN 4    // 列
 
 double matrix[ROW][COLUMN] = {
-        {  1,  2,  0, -1, -1 },
-        {  2,  2,  3,  0, -1 },
-        {  0,  3,  3,  4,  0 },
-        { -1,  0,  4,  4,  5 },
-        { -1, -1,  0,  5,  5 },
+        {  1, -2,  3, -1 },
+        { -2, -4,  2, -3 },
+        {  0, -4,  4, -3 },
+        { -3,  2,  4,  0 },
 };
 
 double answer[ROW][1] = {
-        { -1 },
-        {  7 },
-        { -4 },
-        {  6 },
-        { -1 },
+        { 12 },
+        {  9 },
+        { 15 },
+        { -3 },
 };
 
 void gauss();
-void pivot(int col);
-int max_column_id(int col);
+void pivot(int dig);
+int max_column_id(int dig);
 void exchange_row(int a, int b);
-
-void print_sim();
 
 int main() {
     gauss();
@@ -32,7 +28,7 @@ int main() {
 }
 
 void gauss() {
-    double result[ROW][1] = { {0}, {0}, {0} };
+    double result[ROW][1];
     for (int diag = 0; diag < COLUMN - 1; diag++) {
         pivot(diag);
         for (int row = diag + 1; row < ROW; row++) {
@@ -56,16 +52,16 @@ void gauss() {
     }
 }
 
-void pivot(int col) {
-    int max_id = max_column_id(col);
-    exchange_row(col, max_id);
+void pivot(int dig) {
+    int max_id = max_column_id(dig);
+    exchange_row(dig, max_id);
 }
 
-int max_column_id(int col) {
+int max_column_id(int dig) {
     // max.first: 数値, max.second: id
-    std::pair<int, int> max = std::make_pair(matrix[0][col], 0);
-    for (int row = 1; row < ROW; row++) {
-        if (max.first < matrix[row][col]) max = std::make_pair(matrix[row][col], row);
+    std::pair<int, int> max = std::make_pair(matrix[dig][dig], dig);
+    for (int row = dig + 1; row < ROW; row++) {
+        if (max.first < matrix[row][dig]) max = std::make_pair(matrix[row][dig], row);
     }
     return max.second;
 }
@@ -75,13 +71,4 @@ void exchange_row(int a, int b) {
         std::swap(matrix[a][col], matrix[b][col]);
     }
     std::swap(answer[a][0], answer[b][0]);
-}
-
-void print_sim() {
-    for (int row = 0; row < ROW; row++) {
-        for (int col = 0; col < COLUMN; col++) {
-            printf("%4.1lf ", matrix[row][col]);
-        }
-        printf(",%4.1lf\n", answer[row][0]);
-    }
 }
